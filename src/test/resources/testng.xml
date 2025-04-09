@@ -1,9 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Test Suite for Buildout">
-    <test name = "Test Cases for Buildout">
-       <classes>          
-            <class name="demo.TestCases"></class>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Test Suite for FlipKart">
+    <test name = "Test Cases for Washing Machine">
+        <parameter name="input1" value="Washing Machine"/>
+       <classes>
+            <class name="demo.TestCases">
+                <methods>
+                    <include name="testCase01"/>
+                </methods>
+            </class>
         </classes>
     </test>
+
+    <test name = "Test Cases for iPhone">
+        <parameter name="input2" value="iPhone"/>
+        <classes>
+            <class name="demo.TestCases">
+                <methods>
+                    <include name="testCase02"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name = "Test Cases for Coffee Mug">
+        <parameter name="input3" value="Coffee Mug"/>
+        <classes>
+            <class name="demo.TestCases">
+                <methods>
+                    <include name="testCase03"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
 </suite>

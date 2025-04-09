@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results total="3" passed="3" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2025-04-09T13:29:54Z" name="Test Suite for FlipKart" finished-at="2025-04-09T13:30:36Z" duration-ms="41821">
+    <groups>
+    </groups>
+    <test started-at="2025-04-09T13:29:54Z" name="Test Cases for Washing Machine" finished-at="2025-04-09T13:30:10Z" duration-ms="15587">
+      <class name="demo.TestCases">
+        <test-method is-config="true" signature="startBrowser()[pri:0, instance:demo.TestCases@53fe15ff]" started-at="2025-04-09T18:59:54Z" name="startBrowser" finished-at="2025-04-09T18:59:56Z" duration-ms="2274" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startBrowser -->
+        <test-method signature="testCase01(java.lang.String)[pri:0, instance:demo.TestCases@53fe15ff]" started-at="2025-04-09T18:59:56Z" name="testCase01" description="Search Washing Machine" finished-at="2025-04-09T19:00:09Z" duration-ms="13005" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Washing Machine]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testCase01 -->
+        <test-method is-config="true" signature="endTest()[pri:0, instance:demo.TestCases@53fe15ff]" started-at="2025-04-09T19:00:09Z" name="endTest" finished-at="2025-04-09T19:00:10Z" duration-ms="277" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- endTest -->
+      </class> <!-- demo.TestCases -->
+    </test> <!-- Test Cases for Washing Machine -->
+    <test started-at="2025-04-09T13:30:10Z" name="Test Cases for iPhone" finished-at="2025-04-09T13:30:19Z" duration-ms="9240">
+      <class name="demo.TestCases">
+        <test-method is-config="true" signature="startBrowser()[pri:0, instance:demo.TestCases@74d1dc36]" started-at="2025-04-09T19:00:10Z" name="startBrowser" finished-at="2025-04-09T19:00:11Z" duration-ms="1158" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startBrowser -->
+        <test-method signature="testCase02(java.lang.String)[pri:0, instance:demo.TestCases@74d1dc36]" started-at="2025-04-09T19:00:11Z" name="testCase02" description="Search IPhone" finished-at="2025-04-09T19:00:19Z" duration-ms="7837" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[iPhone]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testCase02 -->
+        <test-method is-config="true" signature="endTest()[pri:0, instance:demo.TestCases@74d1dc36]" started-at="2025-04-09T19:00:19Z" name="endTest" finished-at="2025-04-09T19:00:19Z" duration-ms="243" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- endTest -->
+      </class> <!-- demo.TestCases -->
+    </test> <!-- Test Cases for iPhone -->
+    <test started-at="2025-04-09T13:30:19Z" name="Test Cases for Coffee Mug" finished-at="2025-04-09T13:30:36Z" duration-ms="16966">
+      <class name="demo.TestCases">
+        <test-method is-config="true" signature="startBrowser()[pri:0, instance:demo.TestCases@795509d9]" started-at="2025-04-09T19:00:19Z" name="startBrowser" finished-at="2025-04-09T19:00:20Z" duration-ms="1079" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startBrowser -->
+        <test-method signature="testCase03()[pri:0, instance:demo.TestCases@795509d9]" started-at="2025-04-09T19:00:20Z" name="testCase03" description="Search Coffee Mug" finished-at="2025-04-09T19:00:36Z" duration-ms="15659" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testCase03 -->
+        <test-method is-config="true" signature="endTest()[pri:0, instance:demo.TestCases@795509d9]" started-at="2025-04-09T19:00:36Z" name="endTest" finished-at="2025-04-09T19:00:36Z" duration-ms="227" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- endTest -->
+      </class> <!-- demo.TestCases -->
+    </test> <!-- Test Cases for Coffee Mug -->
+  </suite> <!-- Test Suite for FlipKart -->
+</testng-results>
