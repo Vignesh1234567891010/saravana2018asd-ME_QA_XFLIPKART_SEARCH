@@ -1,7 +1,6 @@
 package demo;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -16,10 +15,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 
 
@@ -38,180 +34,137 @@ public class TestCases {
     @Parameters("input1")
     public void testCase01(String input){
 
-        System.out.println("Start TestCase: TestCase1");
+        System.out.println("Start Test Case: TestCase01");
+
+        //Creating Object for Wrapper Class and Passing driver reference
         action = new Wrappers(driver);
+
+        //Navigate to flipkart
         action.navigateToUrl("https://www.flipkart.com");
-        String currentUrl = action.currentUrl();
 
-        if(currentUrl.contains("flipkart")){
-            Assert.assertTrue(true);
-            System.out.println("Test Case 1: Navigated to the flipkart");
-        }else {
-            Assert.assertFalse(false);
-            System.out.println("Test Case 1: Unable to Navigate to flipkart");
-        }
+        //Validating url
+        Assert.assertTrue(action.validateUrl("flipkart"), "Could not Navigate to the Url");
+        System.out.println("Test Step: Successfully Navigated to the Url");
+        action.waitForPageLoad();
 
-        By searchBox = By.name("q");
+        //Locating WebElement of SearchBox
+        WebElement searchBox = action.getElement(By.name("q"));
+
+        //Entering the Search input in the Field and Submitting
         action.type(searchBox, input);
-        String inputText = driver.findElement(By.name("q")).getAttribute("value");
-        if(inputText.contains(input)){
-            Assert.assertTrue(true);
-            System.out.println("Test Case 1: Correct input is entered");
-        }
-        action.enter();
-        action.wait(2000);
-        System.out.println("Test Case 1: Searched "+input);
+        System.out.println("Test Step: Successfully Searched "+input);
 
-        By popularity = By.xpath("//span[text()='Sort By']//following-sibling::div[text()='Popularity']");
-        action.click(popularity);
-        action.wait(2000);
+        //Waiting for PageLoad
+        action.waitForPageLoad();
 
-        System.out.println("Test Case 1: Clicked On Popularity Sort By");
-        By ratingsElements = By.xpath("//div[@class='XQDdHH']");
 
-        List<WebElement> ratings = action.getElements(ratingsElements);
-        int count = 0;
-        for (WebElement ratingElement : ratings){
-            String ratingText = action.getText(ratingElement);
-            try {
-                double rating = Double.parseDouble(ratingText);
-                if(rating <= 4.0){
-                    count++;
-                    System.out.println("Valid Rating Found: "+rating);
-                }
-            }catch (NumberFormatException ignored){
-                System.out.println("Skipped non-numeric rating: " + ratingText);
-            }
-        }
+        //Click The Element Using Visible Text in the Sort By
+        action.clickByVisibleText(action.getElements(By.xpath("//div[@class='sHCOk2']//child::div")), "Popularity");
+        System.out.println("Test Step: Successfully Clicked on Popularity Sort");
 
-        System.out.println("Total products with rating <= 4.0: " + count);
-        System.out.println("End Test: TestCase1");
+        //Waiting for PageLoad
+        action.waitForPageLoad();
+
+
+        //Getting count of Product less than equal to 4.0 rating
+        int count = action.getRatingCountLessThanEqualToFour();
+        System.out.println("Test Step: Count of Product Less Than Equal to 4.0: "+count);
+        System.out.println("End Test Case");
 
     }
 
-    @Test(description = "Search IPhone")
+    @Test(description = "Search iPhone")
     @Parameters("input2")
     public void testCase02(String input){
 
-        System.out.println("Start TestCase: TestCase2");
+        System.out.println("Start Test Case: TestCase02");
 
+        //Creating Object for Wrapper Class and Passing driver reference
         action = new Wrappers(driver);
+
+        //Navigate to FlipKart
         action.navigateToUrl("https://www.flipkart.com");
-        System.out.println("Test Case 2: Navigated to FlipKart");
 
-        By searchBox = By.name("q");
+        //Validating Url
+        Assert.assertTrue(action.validateUrl("flipkart"), "Could not navigate to URL");
+        System.out.println("Test Step: Successfully Navigated to the Url");
+        action.waitForPageLoad();
+
+        //Locating WebElement for searchBox
+        WebElement searchBox = action.getElement(By.name("q"));
+
+        //Entering the search input in the searchBox and submitting
         action.type(searchBox, input);
-        String inputText = driver.findElement(searchBox).getAttribute("value");
-        if(inputText.contains(input)){
-            Assert.assertTrue(true);
-            System.out.println("Test Case 2: Correct input is entered");
-        }
-        action.enter();
-        action.wait(2000);
-        System.out.println("Test Case 2: Searched "+input);
+        Assert.assertTrue(action.validateUrl(input), "Unbale to search");
+        System.out.println("Test Step: Successfully Searched "+input);
 
-        By titleElements = By.xpath("//div[@class='KzDlHZ']");
-        By discountElements = By.xpath("//span[contains(text(),'% off')]");
+        action.waitForPageLoad();
 
-        List<WebElement> titles = action.getElements(titleElements);
-        List<WebElement> discounts = action.getElements(discountElements);
+        //Getting List Of WebElements for titles and discount
+        List<WebElement> titles = action.getElements(By.xpath("//div[@class='KzDlHZ']"));
+        List<WebElement> discounts = action.getElements(By.xpath("//div[@class='KzDlHZ']//following::div[@class='UkUFwK']//span"));
 
-        int count = 0;
-        for(int i=0;i < Math.min(titles.size(), discounts.size());i++){
+        //Printing Title Greater than 17 discount
+        action.printingTitlesGreaterThanDiscount(titles, discounts);
+        System.out.println("End Test Case");
 
-            WebElement discountElement = discounts.get(i);
-            String discountText = action.getText(discountElement);
-
-            try {
-                int discountValue = Integer.parseInt(discountText.replaceAll("[^0-9]",""));
-
-                if(discountValue > 17){
-                    count++;
-                    String title = action.getText(titles.get(i));
-                    System.out.println("Title: "+title+" and its discount is: "+discountValue+"% off");
-                }
-            }catch (NumberFormatException ignored){
-
-            }
-        }
-        System.out.println("count: "+count);
-        System.out.println("End Test: TestCase2");
     }
 
     @Test(description = "Search Coffee Mug")
-    public void testCase03(){
+    @Parameters("input3")
+    public void testCase03(String input){
 
-        System.out.println("Start TestCase: TestCase2");
+        System.out.println("Start Test Case: TestCase03");
+
+        //Creating Wrapper class object and passing driver as reference
         action = new Wrappers(driver);
+
+        //Navigate to flipkart
         action.navigateToUrl("https://www.flipkart.com");
-        System.out.println("Test Case 3: Navigated to flipkart");
 
-        By searchBox = By.name("q");
-        action.type(searchBox, "Coffee Mug");
-        String inputText = driver.findElement(searchBox).getAttribute("value");
-        if(inputText.contains("Coffee Mug")){
-            System.out.println("Test Case 3: Correct Input is entered");
-        }
-        action.enter();
-        System.out.println("Test Case 3: Searched Coffee Mug");
+        //Validate Url
+        Assert.assertTrue(action.validateUrl("flipkart"),"Test Step: Unable to Navigate to flipkart");
+        System.out.println("Test Step: Successfully Navigated to flipkart");
+        action.waitForPageLoad();
 
-        action.wait(2000);
+        //Locating WebElement for search box
+        WebElement searchBox = action.getElement(By.name("q"));
 
-        By ratingFilter = By.xpath("//div[contains(text(),'4★')]");
-        action.click(ratingFilter);
-        System.out.println("Test Case 3: Clicked 4 & above rating");
+        //Entering Search input in the Search field and submitting
+        action.type(searchBox, input);
+        action.waitForPageLoad();
+        System.out.println("Test Step: Successfully Searched "+input);
 
-        action.wait(2000);
-        class Product{
-            final String title;
-            final String imageUrl;
-            final int reviewCount;
+        //Locating List Of WebElement for Customer Ratings
+        List<WebElement> customerRatings = action.getElements(By.xpath("(//div[contains(@class,'ewzVkT')])[position()<=4]"));
 
-            public Product(String title, String imageUrl, int reviewCount){
-                this.title = title;
-                this.imageUrl = imageUrl;
-                this.reviewCount = reviewCount;
-            }
-        }
+        //Selecting Check Box for Customer Rating
+        action.clickCustomerRatingByText(customerRatings, "4");
+        action.waitForPageLoad();
 
-        List<WebElement> productCard = action.getElements(By.xpath("//div[@class='slAVV4']"));
-        List<Product> coffeeMug = new ArrayList<>();
-        Set<String> seenTitles = new HashSet<>();
+        //Extracting Text from WebElements
+        List<String> titlesText = action.getTitles();
 
-        for (WebElement product : productCard){
-            try {
-                String title = product.findElement(By.xpath(".//a[contains(@class,'wjcEIp')]")).getText();
+        //Extracting Image Url from WebElements
+        List<String> imageUrls = action.getImageUrl();
 
-                //Avoid duplicated
-                if(seenTitles.contains(title)){
-                    continue;
-                }
-                seenTitles.add(title);
-                String imageUrl = product.findElement(By.xpath(".//img[@class='DByuf4']")).getAttribute("src");
-                String reviewText = product.findElement(By.xpath(".//span[@class='Wphh3N']")).getText();
+        //Extracting Review Count from Welement
+        List<Integer> reviewCounts = action.getReviewCounts();
 
-                int reviewCount = 0;
-                if(reviewText.matches("\\([\\d,]+\\)")){
-                    reviewCount = Integer.parseInt(reviewText.replaceAll("[(),]",""));
-                }
+        //Extracting indices after sorting
+        List<Integer> sortedIndices = action.sortIndicesForReviewCount(reviewCounts);
 
-                coffeeMug.add(new Product(title, imageUrl, reviewCount));
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-            }
-        }
-
-        coffeeMug.sort((a,b) -> Integer.compare(b.reviewCount, a.reviewCount));
-
-        System.out.println("Test Case 3: Top 5 Coffee Mugs (By Reviews)");
-        for (int i=0; i < Math.min(5, coffeeMug.size()); i++){
-            Product p = coffeeMug.get(i);
-            System.out.println("Test Case 3: Title= "+p.title);
-            System.out.println("Test Case 3: Image Url= "+p.imageUrl);
-            System.out.println("Test Case 3: Review Count= "+p.reviewCount);
-            System.out.println("------------------------------------------");
+        System.out.println("Test Step: Top 5 Coffee Mugs (4★ & above) by Review Count: ");
+        for (int index : sortedIndices){
+            System.out.println("Title: "+titlesText.get(index));
+            System.out.println("Image Url: "+imageUrls.get(index));
+            System.out.println("Reviews: "+reviewCounts.get(index));
+            System.out.println("-----------------------------------------------------------------------------------------");
         }
     }
+
+
+
 
      
     /*
@@ -236,7 +189,7 @@ public class TestCases {
         System.setProperty(ChromeDriverService.CHROME_DRIVER_LOG_PROPERTY, "build/chromedriver.log"); 
 
         driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         driver.manage().window().maximize();
     }
 
